@@ -104,7 +104,7 @@ deploy:
     github: https://github_token@github.com/leungchiwah/leungchiwah.github.io.git,master
     #github: github_token@github.com:leungchiwah/leungchiwah.github.io.git,master
     #coding: git@e.coding.net:lavacy-chiwah/leungchiwah/leungchiwah.git,master
-    coding: https://leungchiwah:codi_token@e.coding.net/lavacy-chiwah/leungchiwah/leungchiwah.git
+    coding: https://codi_token@e.coding.net/lavacy-chiwah/leungchiwah/leungchiwah.git,master
 # Search
 ## https://github.com/theme-next/hexo-generator-searchdb
 search:
