@@ -101,7 +101,7 @@ theme: ils
 deploy:
   type: git
   repo:
-    github: git@github.com:leungchiwah/leungchiwah.github.io.git,master
+    github: github_token@github.com:leungchiwah/leungchiwah.github.io.git,master
     coding: git@e.coding.net:lavacy-chiwah/leungchiwah/leungchiwah.git,master
 # Search
 ## https://github.com/theme-next/hexo-generator-searchdb
