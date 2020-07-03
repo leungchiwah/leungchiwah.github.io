@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        工作中常见的Apache优化策略 | ___差池
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/wechat01.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"chiwahbb.club","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"1.1.1","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+<div class="page-template">
+    <div class="page-top">
+        <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            ___差池
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+    </div>
+
+    <div class="page-middle ">
+
+        <main class="main-content normal-code-theme">
+
+            <div class="main-content-left">
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">工作中常见的Apache优化策略</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-07-01 14:50:41
+    </span>
+    
+    
+    
+</div>
+        </div>
+
+        <div class="article-content markdown-body">
+            <h6 id="设置Apache的日志轮替和切割规则，防止日志文件过大"><a href="#设置Apache的日志轮替和切割规则，防止日志文件过大" class="headerlink" title="设置Apache的日志轮替和切割规则，防止日志文件过大"></a>设置Apache的日志轮替和切割规则，防止日志文件过大</h6><h6 id="美化错误页面，将错误页面重定向到首页或指定页面"><a href="#美化错误页面，将错误页面重定向到首页或指定页面" class="headerlink" title="美化错误页面，将错误页面重定向到首页或指定页面"></a>美化错误页面，将错误页面重定向到首页或指定页面</h6><h6 id="屏蔽Apache的版本等信息，防止别人获取Apache的相应版本"><a href="#屏蔽Apache的版本等信息，防止别人获取Apache的相应版本" class="headerlink" title="屏蔽Apache的版本等信息，防止别人获取Apache的相应版本"></a>屏蔽Apache的版本等信息，防止别人获取Apache的相应版本</h6><h6 id="配置静态缓存，减少对服务器的访问压力"><a href="#配置静态缓存，减少对服务器的访问压力" class="headerlink" title="配置静态缓存，减少对服务器的访问压力"></a>配置静态缓存，减少对服务器的访问压力</h6><h6 id="禁止解析指定目录下的页面程序，比如upload，禁止解析用户上传的脚本文件"><a href="#禁止解析指定目录下的页面程序，比如upload，禁止解析用户上传的脚本文件" class="headerlink" title="禁止解析指定目录下的页面程序，比如upload，禁止解析用户上传的脚本文件"></a>禁止解析指定目录下的页面程序，比如upload，禁止解析用户上传的脚本文件</h6><hr>
+<a id="more"></a>
+
+<h4 id="有哪些技术可以提高网站的安全和效率"><a href="#有哪些技术可以提高网站的安全和效率" class="headerlink" title="有哪些技术可以提高网站的安全和效率"></a>有哪些技术可以提高网站的安全和效率</h4><ul>
+<li>Apache服务器的安全</li>
+<li>Apache服务器的效率</li>
+</ul>
+<h2 id="日志轮替"><a href="#日志轮替" class="headerlink" title="日志轮替"></a>日志轮替</h2><h6 id="利用apache自带的rotatelogs工具进行日志切割，保证单个日志文件不要太大"><a href="#利用apache自带的rotatelogs工具进行日志切割，保证单个日志文件不要太大" class="headerlink" title="利用apache自带的rotatelogs工具进行日志切割，保证单个日志文件不要太大"></a>利用apache自带的rotatelogs工具进行日志切割，保证单个日志文件不要太大</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CustomLog &quot;|&#x2F;bin&#x2F;rotatelogs -l &#x2F;wwwlogs&#x2F;access_%Y%m%d.log 86400&quot; combined</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="美化错误页面"><a href="#美化错误页面" class="headerlink" title="美化错误页面"></a>美化错误页面</h2><h6 id="可以将404-500-等错误信息页面重定向到网站首页或其他页面，提升用户体验"><a href="#可以将404-500-等错误信息页面重定向到网站首页或其他页面，提升用户体验" class="headerlink" title="可以将404 500 等错误信息页面重定向到网站首页或其他页面，提升用户体验"></a>可以将404 500 等错误信息页面重定向到网站首页或其他页面，提升用户体验</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim httpd.conf</span><br><span class="line"></span><br><span class="line">ErrorDocument 404 http:&#x2F;&#x2F;www.a.com</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="屏蔽apache版本等敏感信息"><a href="#屏蔽apache版本等敏感信息" class="headerlink" title="屏蔽apache版本等敏感信息"></a>屏蔽apache版本等敏感信息</h2><h6 id="开启子配置文件调用"><a href="#开启子配置文件调用" class="headerlink" title="开启子配置文件调用"></a>开启子配置文件调用</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim httpd.conf</span><br><span class="line">Include conf&#x2F;extra&#x2F;httpd-default.conf</span><br></pre></td></tr></table></figure>
+
+<h6 id="修改配置文件中默认显示的信息"><a href="#修改配置文件中默认显示的信息" class="headerlink" title="修改配置文件中默认显示的信息"></a>修改配置文件中默认显示的信息</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim httpd-default.conf</span><br><span class="line">ServerTokens prod 显示 &quot;Server: Apache&quot;</span><br><span class="line">ServerTokens Major 显示 &quot;Server: Apache&#x2F;2&quot;</span><br><span class="line">ServerTokens Minjor 显示 &quot;Server: Apache&#x2F;2.2&quot;</span><br><span class="line">ServerTokens Min 显示 &quot;Server: Apache&#x2F;2.2.17&quot;</span><br><span class="line">ServerTokens OS 显示 &quot;Server: Apache&#x2F;2.2.17 (Unix)&quot;</span><br><span class="line">ServerTokens Full 显示 &quot;Server: Apache&#x2F;2.2.17 (Unix) PHP&#x2F;5.3.5&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置静态缓存"><a href="#配置静态缓存" class="headerlink" title="配置静态缓存"></a>配置静态缓存</h2><h6 id="此模块默认未启用，请手动启动"><a href="#此模块默认未启用，请手动启动" class="headerlink" title="此模块默认未启用，请手动启动"></a>此模块默认未启用，请手动启动</h6><h6 id="此模块一般写到指定的某一个网站标签中"><a href="#此模块一般写到指定的某一个网站标签中" class="headerlink" title="此模块一般写到指定的某一个网站标签中"></a>此模块一般写到指定的某一个网站标签中</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vim httpd.conf</span><br><span class="line">&lt;IfModule mod_expires.c&gt;</span><br><span class="line">    ExpiresActive on</span><br><span class="line">    ExpiresByType image&#x2F;gif &quot;access plus 1 days&quot;</span><br><span class="line">    ExpiresByType image&#x2F;jpeg &quot;access plus 24 hours&quot;</span><br><span class="line">    ExpiresByType image&#x2F;png &quot;access plus 1 days&quot;</span><br><span class="line">    ExpiresByType text&#x2F;css &quot;now plus 2 hours&quot;</span><br><span class="line">    ExpiresDefault &quot;now plus 0 min&quot;</span><br><span class="line">&lt;&#x2F;IfModule&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="禁止解析PHP"><a href="#禁止解析PHP" class="headerlink" title="禁止解析PHP"></a>禁止解析PHP</h2><h6 id="新增目录权限标签"><a href="#新增目录权限标签" class="headerlink" title="新增目录权限标签"></a>新增目录权限标签</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">vim httpd.conf</span><br><span class="line"></span><br><span class="line">&lt;Directory &quot;&#x2F;www&#x2F;a.com&#x2F;uploads&quot;&gt;</span><br><span class="line">    Options FollowSymLinks</span><br><span class="line">    AllowOverride None</span><br><span class="line">    Order allow,deny</span><br><span class="line">    Allow from all</span><br><span class="line">    php_flag engine off</span><br><span class="line">&lt;&#x2F;Directory&gt;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <div class="article-nav">
+            
+                <div class="article-prev">
+                    <a class="prev btn"
+                       rel="prev"
+                       href="/2020/07/02/Apache%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1/"
+                    >
+                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">Apache网络服务</span><span class="post-nav-item">上一篇</span>
+                    </a>
+                </div>
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/07/01/hello-world/"
+                    >
+                        <span class="post-nav-title-item">Hello World</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+    <div class="valine-container">
+        <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+        <div id="vcomments"></div>
+        <script>
+            new Valine({
+                el: '#vcomments',
+                appId: 'nNNGRtAhNMSlSykGrsarFKyT-gzGzoHsz',
+                appKey: 'j9bg0DklLawDGrGC6yPRFtFi',
+                meta: 'nick,mail,link'.split(','),
+                avatar: 'wavatar',
+                enableQQ: true,
+                placeholder: '余生请指教~',
+                lang: 'zh-CN'.toLowerCase()
+            })
+        </script>
+    </div>
+
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+    <div class="article-toc-container fade-in-down-animation">
+        <div class="article-toc">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#设置Apache的日志轮替和切割规则，防止日志文件过大"><span class="nav-number">1.</span> <span class="nav-text">设置Apache的日志轮替和切割规则，防止日志文件过大</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#美化错误页面，将错误页面重定向到首页或指定页面"><span class="nav-number">2.</span> <span class="nav-text">美化错误页面，将错误页面重定向到首页或指定页面</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#屏蔽Apache的版本等信息，防止别人获取Apache的相应版本"><span class="nav-number">3.</span> <span class="nav-text">屏蔽Apache的版本等信息，防止别人获取Apache的相应版本</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#配置静态缓存，减少对服务器的访问压力"><span class="nav-number">4.</span> <span class="nav-text">配置静态缓存，减少对服务器的访问压力</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#禁止解析指定目录下的页面程序，比如upload，禁止解析用户上传的脚本文件"><span class="nav-number">5.</span> <span class="nav-text">禁止解析指定目录下的页面程序，比如upload，禁止解析用户上传的脚本文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有哪些技术可以提高网站的安全和效率"><span class="nav-number"></span> <span class="nav-text">有哪些技术可以提高网站的安全和效率</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志轮替"><span class="nav-number"></span> <span class="nav-text">日志轮替</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#利用apache自带的rotatelogs工具进行日志切割，保证单个日志文件不要太大"><span class="nav-number">1.</span> <span class="nav-text">利用apache自带的rotatelogs工具进行日志切割，保证单个日志文件不要太大</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#美化错误页面"><span class="nav-number"></span> <span class="nav-text">美化错误页面</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#可以将404-500-等错误信息页面重定向到网站首页或其他页面，提升用户体验"><span class="nav-number">1.</span> <span class="nav-text">可以将404 500 等错误信息页面重定向到网站首页或其他页面，提升用户体验</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#屏蔽apache版本等敏感信息"><span class="nav-number"></span> <span class="nav-text">屏蔽apache版本等敏感信息</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#开启子配置文件调用"><span class="nav-number">1.</span> <span class="nav-text">开启子配置文件调用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#修改配置文件中默认显示的信息"><span class="nav-number">2.</span> <span class="nav-text">修改配置文件中默认显示的信息</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置静态缓存"><span class="nav-number"></span> <span class="nav-text">配置静态缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#此模块默认未启用，请手动启动"><span class="nav-number">1.</span> <span class="nav-text">此模块默认未启用，请手动启动</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#此模块一般写到指定的某一个网站标签中"><span class="nav-number">2.</span> <span class="nav-text">此模块一般写到指定的某一个网站标签中</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#禁止解析PHP"><span class="nav-number"></span> <span class="nav-text">禁止解析PHP</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#新增目录权限标签"><span class="nav-number">1.</span> <span class="nav-text">新增目录权限标签</span></a></li></ol>
+    </div>
+</div>
+        </div>
+    </div>
+
+
+                
+
+            </div>
+
+            
+
+        </main>
+
+        <div class="sidebar-tools">
+            <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <div class="scroll-to-top">
+                <ul>
+                    <li>
+                        <!--<i class="fa fa-caret-up"></i>-->
+                        <span class="scroll-percent"></span>
+                    </li>
+                </ul>
+            </div>
+        
+    </div>
+
+    <div class="page-bottom">
+        <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <a href="/">欧阳修</a>
+        </div>
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v1.1.1</a>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+</div>
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+    
+<script src="/js/scroll-to-top.js"></script>
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+
+
+</body>
+</html>

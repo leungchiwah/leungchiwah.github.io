@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        DHCP+FTP网络服务 | ___差池
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/wechat01.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"chiwahbb.club","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"1.1.1","author":"XPoet","repository":"https://github.com/XPoet/hexo-theme-ils"},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+<div class="page-template">
+    <div class="page-top">
+        <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            ___差池
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+    </div>
+
+    <div class="page-middle ">
+
+        <main class="main-content normal-code-theme">
+
+            <div class="main-content-left">
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">DHCP+FTP网络服务</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-07-02 20:54:31
+    </span>
+    
+    
+    
+</div>
+        </div>
+
+        <div class="article-content markdown-body">
+            <h5 id="请描述通过DHCP服务器获取IP地址的过程"><a href="#请描述通过DHCP服务器获取IP地址的过程" class="headerlink" title="请描述通过DHCP服务器获取IP地址的过程"></a>请描述通过DHCP服务器获取IP地址的过程</h5><h6 id="DHCP租约过程分为四部曲："><a href="#DHCP租约过程分为四部曲：" class="headerlink" title="DHCP租约过程分为四部曲："></a>DHCP租约过程分为四部曲：</h6><ol>
+<li><p>客户机请求IP（客户机发DHCPDISCOVER广播包）</p>
+</li>
+<li><p>服务器响应（服务器发DHCPOFFER广播包）</p>
+</li>
+<li><p>客户机选择IP（客户机发DHCPREQUEST广播包）</p>
+</li>
+<li><p>服务器确定租约（服务器发DHCPACK/DHCPNAK广播包）</p>
+<a id="more"></a>
+<h6 id="DHCP续租两部曲："><a href="#DHCP续租两部曲：" class="headerlink" title="DHCP续租两部曲："></a>DHCP续租两部曲：</h6></li>
+<li><p>客户机续租IP（客户机发DHCPREQUEST）</p>
+</li>
+<li><p>服务器确定租约/不续（服务器发DHCPACK/DHCPNAK）</p>
+</li>
+</ol>
+<h6 id="DHCP租用失败："><a href="#DHCP租用失败：" class="headerlink" title="DHCP租用失败："></a>DHCP租用失败：</h6><ul>
+<li><p>如果DHCP客户机无法找到DHCP服务器，它将从TCP/IP的B类网段169.254.0.0/16中挑选一个IP地址作为自己的临时IP地址，继续每隔5分钟尝试与DHCP服务器进行通讯，一旦与DHCP服务器取得联系，则客户机放弃自动配置的临时IP地址，而使用DHCP服务器分配的IP地址</p>
+</li>
+<li><p>DHCP客户机收到DHCP服务器回应的ACK报文后，通过地址冲突检测（arp）发现服务器分配的地址冲突或者由于其他原因导致不能使用，则发送DECLINE报文，通知服务器所分配的IP地址不可用</p>
+</li>
+</ul>
+<h5 id="简单描述FTP的主动模式和被动模式的区别？"><a href="#简单描述FTP的主动模式和被动模式的区别？" class="headerlink" title="简单描述FTP的主动模式和被动模式的区别？"></a>简单描述FTP的主动模式和被动模式的区别？</h5><ul>
+<li>主动模式</li>
+</ul>
+<blockquote>
+<p>FTP客户端从任意的非特殊的端口（N&gt;1023）连入到FTP服务器的命令端口–21端口。然后客户端在N+1（N+1 &gt;= 1024）端口监听，并且通过N+1（N+1&gt;=1024）端口发送命令给FTP服务器。服务器会反过来连接用户本地指定的数据端口，比如20端口。</p>
+<p>主动模式的FTP的主要问题实际上落在客户端。FTP的客户端并不会主动连接到服务器的数据端口，而是是告诉服务器它正在监听哪个端口，然后服务器发起连接到客户端上指定的端口。但是，这样的连接有时候会被客户端的防火墙阻止。</p>
+</blockquote>
+<ul>
+<li>被动模式</li>
+</ul>
+<blockquote>
+<p>为了解决服务器主动发起到客户端连接会被阻止的问题，另一种更完善的工作模式出现了，它就是 FTP 的被动模式，缩写作 PASV，它工作的前提是客户端明确告知 FTP 服务器它使用被动模式。</p>
+<p>在被动模式的 FTP 中，客户端启动到服务器的两个连接，解决了防火墙阻止从服务器到客户端的传入数据端口连接的问题。FTP 连接建立后，客户端在本地打开两个随机的非系统端口 N 和 N + 1(N &gt; 1023)。第一个端口连接服务器上的 21 端口，但是客户端这次将会发出 PASV 命令，也就是不允许服务器连接回其数据端口。这样，服务器随后会打开一个随机的非系统端口 P (P &gt; 1023)，并将 P 发送给客户端作为 PASV 命令的响应。然后客户端启动从端口 N+1 到端口 P 的连接来传输数据</p>
+</blockquote>
+
+        </div>
+
+        <div class="article-nav">
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/07/02/Apache%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1/"
+                    >
+                        <span class="post-nav-title-item">Apache网络服务</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+    <div class="valine-container">
+        <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+        <div id="vcomments"></div>
+        <script>
+            new Valine({
+                el: '#vcomments',
+                appId: 'nNNGRtAhNMSlSykGrsarFKyT-gzGzoHsz',
+                appKey: 'j9bg0DklLawDGrGC6yPRFtFi',
+                meta: 'nick,mail,link'.split(','),
+                avatar: 'wavatar',
+                enableQQ: true,
+                placeholder: '余生请指教~',
+                lang: 'zh-CN'.toLowerCase()
+            })
+        </script>
+    </div>
+
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+    <div class="article-toc-container fade-in-down-animation">
+        <div class="article-toc">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#请描述通过DHCP服务器获取IP地址的过程"><span class="nav-number">1.</span> <span class="nav-text">请描述通过DHCP服务器获取IP地址的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#DHCP租约过程分为四部曲："><span class="nav-number">1.1.</span> <span class="nav-text">DHCP租约过程分为四部曲：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#DHCP续租两部曲："><span class="nav-number">1.2.</span> <span class="nav-text">DHCP续租两部曲：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#DHCP租用失败："><span class="nav-number">1.3.</span> <span class="nav-text">DHCP租用失败：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#简单描述FTP的主动模式和被动模式的区别？"><span class="nav-number">2.</span> <span class="nav-text">简单描述FTP的主动模式和被动模式的区别？</span></a></li></ol>
+    </div>
+</div>
+        </div>
+    </div>
+
+
+                
+
+            </div>
+
+            
+
+        </main>
+
+        <div class="sidebar-tools">
+            <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <div class="scroll-to-top">
+                <ul>
+                    <li>
+                        <!--<i class="fa fa-caret-up"></i>-->
+                        <span class="scroll-percent"></span>
+                    </li>
+                </ul>
+            </div>
+        
+    </div>
+
+    <div class="page-bottom">
+        <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2020 <a href="/">欧阳修</a>
+        </div>
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v1.1.1</a>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+</div>
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+    
+<script src="/js/scroll-to-top.js"></script>
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+
+
+</body>
+</html>
