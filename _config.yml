@@ -102,7 +102,7 @@ deploy:
   type: git
   repo:
     github: https://github_token@github.com/leungchiwah/leungchiwah.github.io.git,master
-    #github: github_token@github.com:leungchiwah/leungchiwah.github.io.git,master
+    #github: github.com:leungchiwah/leungchiwah.github.io.git,master
     #coding: git@e.coding.net:lavacy-chiwah/leungchiwah/leungchiwah.git,master
     coding: https://vlxEGeexvI:codi_token@e.coding.net/lavacy-chiwah/leungchiwah/leungchiwah.git,master
 # Search

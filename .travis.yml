@@ -14,14 +14,15 @@ cache:
 
 #在构建之前安装hexo环境和主题，这里的主题就是原来修改过的主题，我将其托管到另一个github仓库，直接clone就行，否则每次都是新的主题，要重新设置。
 before_install:
-  - npm install -g hexo-cli
+  - npm install -g cnpm --registry=https://registry.npm.taobao.org
+  - cnpm install -g hexo-cli
   - git clone https://github.com/leungchiwah/ils.git themes/ils
 
 #安装git插件和搜索功能插件
 install:
-  - npm install
-  - npm install hexo-deployer-git --save
-  - npm install hexo-generator-searchdb --save
+  - cnpm install
+  - cnpm install hexo-deployer-git --save
+  - cnpm install hexo-generator-searchdb --save
 
 # 执行清缓存，生成网页操作
 script:
