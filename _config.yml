@@ -115,11 +115,11 @@ search:
   format: striptags
 
 # 站点地图
-Plugins:
-  - hexo-generator-baidu-sitemap
-  - hexo-generator-sitemap
-
-baidusitemap:
-  path: baidusitemap.xml
-sitemap:
-  path: sitemap.xml
+#Plugins:
+#  - hexo-generator-baidu-sitemap
+#  - hexo-generator-sitemap
+#
+#baidusitemap:
+#  path: baidusitemap.xml
+#sitemap:
+#  path: sitemap.xml

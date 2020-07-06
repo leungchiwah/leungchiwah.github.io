@@ -23,8 +23,6 @@ install:
   - cnpm install
   - cnpm install hexo-deployer-git --save
   - cnpm install hexo-generator-searchdb --save
-  - cnpm install hexo-generator-sitemap --save
-  - cnpm install hexo-generator-baidu-sitemap --save
 
 # 执行清缓存，生成网页操作
 script:
