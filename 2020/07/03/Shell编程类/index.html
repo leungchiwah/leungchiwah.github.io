@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        Shell编程类 | ___差池
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/wechat01.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"www.chiwahbb.club","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"1.1.1","author":"chiwah","repository":"https://github.com/XPoet/hexo-theme-ils"},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+<div class="page-template">
+    <div class="page-top">
+        <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            ___差池
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+    </div>
+
+    <div class="page-middle ">
+
+        <main class="main-content normal-code-theme">
+
+            <div class="main-content-left">
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">Shell编程类</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-07-03 16:18:39
+    </span>
+    
+    
+    
+</div>
+        </div>
+
+        <div class="article-content markdown-body">
+            <p>cut -d “/“ -f 3<br>用”/“作为分隔符,截取第三字段</p>
+<p>sort<br>第一次排序</p>
+<p>uniq -c<br>显示该行重复的次数</p>
+<p>sort -nr<br>按照数值从大到小排序</p>
+<a id="more"></a>
+<h4 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h4><h6 id="使用循环在-Lavacy目录下创建10个txt文件-要求文件名称由6个随机小写字母加固定字符串-gg-组成-例如pzjebg-gg-txt"><a href="#使用循环在-Lavacy目录下创建10个txt文件-要求文件名称由6个随机小写字母加固定字符串-gg-组成-例如pzjebg-gg-txt" class="headerlink" title="使用循环在/Lavacy目录下创建10个txt文件,要求文件名称由6个随机小写字母加固定字符串 (_gg) 组成,例如pzjebg_gg.txt"></a>使用循环在/Lavacy目录下创建10个txt文件,要求文件名称由6个随机小写字母加固定字符串 (_gg) 组成,例如pzjebg_gg.txt</h6><blockquote>
+<p>随机字符串生成</p>
+<p>/dev/urandom 不依赖系统中断生成随机字符串,生成数据速度快但数据随机性不足(一般使用/dev/urandom)</p>
+</blockquote>
+<p>tr命令</p>
+<p>可以对来自标准输入的字符进行替换、压缩和删除。它可以将一组字符变成另一组字符</p>
+<p>-c 取代所有不属于第一字符集的字符</p>
+<p>-d 删除所有属于第一字符集的字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"></span><br><span class="line">if [ ! -d &#x2F;Lavacy ];then</span><br><span class="line">        mkdir &#x2F;Lavacy</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">cd &#x2F;Lavacy</span><br><span class="line"></span><br><span class="line">for ((i&#x3D;1;i&lt;&#x3D;10;i++))</span><br><span class="line">  do</span><br><span class="line">        filename&#x3D;&#96;tr -cd &quot;a-z&quot; &lt;&#x2F;dev&#x2F;urandom |head -c 6&#96;</span><br><span class="line">        touch $&#123;filename&#125;_gg.txt</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>$RANDOM #此系统变量可以默认随机生成0-32767的数字</p>
+</blockquote>
+<blockquote>
+<p>echo $RANDOM</p>
+</blockquote>
+<blockquote>
+<p>生成0-32767随机数</p>
+</blockquote>
+<blockquote>
+<p>echo $(($RANDOM%100))</p>
+</blockquote>
+<blockquote>
+<p>生成100以内的随机数</p>
+</blockquote>
+<hr>
+<h6 id="批量检查多个网站是否可以正常访问，要求使用shell数组实现，检测策略尽量模拟用户真实访问模式。"><a href="#批量检查多个网站是否可以正常访问，要求使用shell数组实现，检测策略尽量模拟用户真实访问模式。" class="headerlink" title="批量检查多个网站是否可以正常访问，要求使用shell数组实现，检测策略尽量模拟用户真实访问模式。"></a>批量检查多个网站是否可以正常访问，要求使用shell数组实现，检测策略尽量模拟用户真实访问模式。</h6><blockquote>
+<p>curl </p>
+<p>开源的用于数据传输的命令行工具。可以用于http访问，上传下载、用户认证、代理访问等。</p>
+<p>命令格式：curl 【选项】 url或者IP地址</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">web&#x3D;(</span><br><span class="line">  www.baidu.com</span><br><span class="line">  www.bilibili.com</span><br><span class="line">  10.12.7.13</span><br><span class="line">  www.zhihu.com</span><br><span class="line">)</span><br><span class="line">for i in $&#123;web[*]&#125;</span><br><span class="line">do</span><br><span class="line">        code&#x3D;&#96;curl -o &#x2F;dev&#x2F;null -s --connect-timeout 5 -w &#39;%&#123;http_code&#125;&#39; $i | grep -E &quot;200|302&quot;&#96;</span><br><span class="line">        if [ &quot;$code&quot; !&#x3D; &quot;&quot; ];then</span><br><span class="line">                echo &quot;$i is ok&quot; &gt;&gt;&#x2F;root&#x2F;ok.log</span><br><span class="line">        else</span><br><span class="line">                sleep 3</span><br><span class="line">                code&#x3D;&#96;curl -o &#x2F;dev&#x2F;null -s --connect-timeout 5 -w &#39;%&#123;http_code&#125;&#39; $i | grep -E &quot;200|302&quot;&#96;</span><br><span class="line">                if [ &quot;$code&quot; !&#x3D; &quot;&quot; ];then</span><br><span class="line">                        echo &quot;$i is ok&quot; &gt;&gt;&#x2F;root&#x2F;ok.log</span><br><span class="line">                else</span><br><span class="line">                        echo &quot;$i is error&quot; &gt;&gt;&#x2F;root&#x2F;error.log</span><br><span class="line">                fi</span><br><span class="line">        fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        <div class="article-nav">
+            
+                <div class="article-prev">
+                    <a class="prev btn"
+                       rel="prev"
+                       href="/2020/07/03/%E7%AE%80%E8%BF%B0%E5%A4%87%E4%BB%BD%E7%AD%96%E7%95%A5/"
+                    >
+                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">简述备份策略</span><span class="post-nav-item">上一篇</span>
+                    </a>
+                </div>
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/07/02/DHCP-FTP%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1/"
+                    >
+                        <span class="post-nav-title-item">DHCP+FTP网络服务</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+    <div class="valine-container">
+        <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+        <div id="vcomments"></div>
+        <script>
+            new Valine({
+                el: '#vcomments',
+                appId: 'nNNGRtAhNMSlSykGrsarFKyT-gzGzoHsz',
+                appKey: 'j9bg0DklLawDGrGC6yPRFtFi',
+                meta: 'nick,wechat,remarks'.split(','),
+                avatar: 'wavatar',
+                enableQQ: true,
+                placeholder: '余生请指教~',
+                lang: 'zh-CN'.toLowerCase()
+            })
+        </script>
+    </div>
+
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+    <div class="article-toc-container fade-in-down-animation">
+        <div class="article-toc">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#面试题"><span class="nav-number">1.</span> <span class="nav-text">面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#使用循环在-Lavacy目录下创建10个txt文件-要求文件名称由6个随机小写字母加固定字符串-gg-组成-例如pzjebg-gg-txt"><span class="nav-number">1.0.1.</span> <span class="nav-text">使用循环在&#x2F;Lavacy目录下创建10个txt文件,要求文件名称由6个随机小写字母加固定字符串 (_gg) 组成,例如pzjebg_gg.txt</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#批量检查多个网站是否可以正常访问，要求使用shell数组实现，检测策略尽量模拟用户真实访问模式。"><span class="nav-number">1.0.2.</span> <span class="nav-text">批量检查多个网站是否可以正常访问，要求使用shell数组实现，检测策略尽量模拟用户真实访问模式。</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </div>
+    </div>
+
+
+                
+
+            </div>
+
+            
+
+        </main>
+
+        <div class="sidebar-tools">
+            <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <div class="scroll-to-top">
+                <ul>
+                    <li>
+                        <!--<i class="fa fa-caret-up"></i>-->
+                        <span class="scroll-percent"></span>
+                    </li>
+                </ul>
+            </div>
+        
+    </div>
+
+    <div class="page-bottom">
+        <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2021 <a href="/">欧阳修</a>
+        </div>
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v1.1.1</a>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+</div>
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+    
+<script src="/js/scroll-to-top.js"></script>
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+
+
+</body>
+</html>

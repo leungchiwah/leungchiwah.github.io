@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        SSH网络服务 | ___差池
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/wechat01.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"www.chiwahbb.club","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"1.1.1","author":"chiwah","repository":"https://github.com/XPoet/hexo-theme-ils"},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+<div class="page-template">
+    <div class="page-top">
+        <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            ___差池
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+    </div>
+
+    <div class="page-middle ">
+
+        <main class="main-content normal-code-theme">
+
+            <div class="main-content-left">
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">SSH网络服务</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-07-05 16:55:05
+    </span>
+    
+    
+    
+</div>
+        </div>
+
+        <div class="article-content markdown-body">
+            <h6 id="哪些设置能够提升SSH远程管理的安全等级？"><a href="#哪些设置能够提升SSH远程管理的安全等级？" class="headerlink" title="哪些设置能够提升SSH远程管理的安全等级？"></a>哪些设置能够提升SSH远程管理的安全等级？</h6><ul>
+<li>登录验证模式修改为密钥登录</li>
+<li>登录端口修改为非22端口以及制定监听IP</li>
+<li>禁止root用户远程登录</li>
+<li>设置无操作时自动断开连接</li>
+<li>设置登录失败后登录尝试次数为3次</li>
+<li>编写防火墙规则，使用白名单机制放行ssh服务的监听端口<a id="more"></a>
+类似面试题<h6 id="ssh连接时认证时间过长如何解决？"><a href="#ssh连接时认证时间过长如何解决？" class="headerlink" title="ssh连接时认证时间过长如何解决？"></a>ssh连接时认证时间过长如何解决？</h6></li>
+</ul>
+<p>配置文件：/etc/ssh/sshd_config</p>
+<table>
+<thead>
+<tr>
+<th>UseDNS no</th>
+<th>#取消ssh登录时的dns反向解析请求功能</th>
+</tr>
+</thead>
+</table>
+<h6 id="scp和rsync进行远程文件复制有什么区别？"><a href="#scp和rsync进行远程文件复制有什么区别？" class="headerlink" title="scp和rsync进行远程文件复制有什么区别？"></a>scp和rsync进行远程文件复制有什么区别？</h6><table>
+<thead>
+<tr>
+<th>~</th>
+<th>~</th>
+<th>~</th>
+<th>~</th>
+<th>~</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>scp</td>
+<td>全量备份</td>
+<td>文件级传输</td>
+<td>加密传输</td>
+<td>资源消耗低</td>
+</tr>
+<tr>
+<td>rsync</td>
+<td>差异对比，增量备份</td>
+<td>分块校验，部分传输</td>
+<td>非加密传输</td>
+<td>资源消耗高</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="ssh的登录验证方式"><a href="#ssh的登录验证方式" class="headerlink" title="ssh的登录验证方式"></a>ssh的登录验证方式</h2><h4 id="用户口令"><a href="#用户口令" class="headerlink" title="用户口令"></a>用户口令</h4><ol>
+<li>客户端向服务端发起ssh请求</li>
+<li>服务端收到请求，发送公钥给客户端</li>
+<li>客户端输入用户名密码通过公钥加密回传给服务端</li>
+<li>服务端通过私钥解密得到用户名密码和本地进行对比，验证成功，允许登录，否则再次验证</li>
+</ol>
+<h4 id="秘钥对登录"><a href="#秘钥对登录" class="headerlink" title="秘钥对登录"></a>秘钥对登录</h4><ol>
+<li>首先在客户端上生成一对秘钥</li>
+<li>将公钥拷贝给服务端一份并重命名为authorized_keys</li>
+<li>客户端向服务端发送一个连接请求，信息包括IP、用户名</li>
+<li>服务端得到客户端的信息后，会到authorized_keys中查找，如果有相应的IP和用户名，服务端会随机生成一个字符串（质疑码）。</li>
+<li>服务端将使用公钥对字符串（质疑码）进行加密，发送给客户端</li>
+<li>客户端得到服务端发来的消息后，客户端会使用私钥进行解密，然后将解密后的字符串（质疑码）发送给服务端</li>
+<li>服务端接收到解密后的字符串会跟先前生成的字符串进行对比，如果一致，就允许客户端免密码登录</li>
+</ol>
+<h2 id="ssh的登录端口和监听设置"><a href="#ssh的登录端口和监听设置" class="headerlink" title="ssh的登录端口和监听设置"></a>ssh的登录端口和监听设置</h2><h6 id="配置文件：-etc-ssh-sshd-config"><a href="#配置文件：-etc-ssh-sshd-config" class="headerlink" title="配置文件：/etc/ssh/sshd_config"></a>配置文件：/etc/ssh/sshd_config</h6><table>
+<thead>
+<tr>
+<th>~</th>
+<th>~</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>#Port 22</td>
+<td>#ssh服务默认监听的端口</td>
+</tr>
+<tr>
+<td>#ListenAddress 0.0.0.0</td>
+<td>#ssh服务默认监听的IP地址</td>
+</tr>
+</tbody></table>
+<p>==生产环境中只监听内网网卡的IP地址==</p>
+<h2 id="ssh的登录用户限制"><a href="#ssh的登录用户限制" class="headerlink" title="ssh的登录用户限制"></a>ssh的登录用户限制</h2><h6 id="配置文件：-etc-ssh-sshd-config-1"><a href="#配置文件：-etc-ssh-sshd-config-1" class="headerlink" title="配置文件：/etc/ssh/sshd_config"></a>配置文件：/etc/ssh/sshd_config</h6><table>
+<thead>
+<tr>
+<th>#PermitRootLogin yes</th>
+<th>#是否允许root用户使用ssh登录</th>
+</tr>
+</thead>
+</table>
+<p>==不建议使用root用户远程登录==</p>
+<h2 id="ssh的登录超时设置"><a href="#ssh的登录超时设置" class="headerlink" title="ssh的登录超时设置"></a>ssh的登录超时设置</h2><p>配置文件：/etc/profile</p>
+<table>
+<thead>
+<tr>
+<th>export TMOUT=300</th>
+<th>#设置客户端5分钟无操作自动断开连接</th>
+</tr>
+</thead>
+</table>
+<p>连接时不操作，自动断开</p>
+<h2 id="ssh登录失败尝试次数"><a href="#ssh登录失败尝试次数" class="headerlink" title="ssh登录失败尝试次数"></a>ssh登录失败尝试次数</h2><h6 id="配置文件：-etc-ssh-sshd-config-2"><a href="#配置文件：-etc-ssh-sshd-config-2" class="headerlink" title="配置文件：/etc/ssh/sshd_config"></a>配置文件：/etc/ssh/sshd_config</h6><table>
+<thead>
+<tr>
+<th>#MaxAuthTries 6</th>
+<th>#设置客户端登录失败尝试次数为6次</th>
+</tr>
+</thead>
+</table>
+<p>预防暴力破解</p>
+
+        </div>
+
+        <div class="article-nav">
+            
+                <div class="article-prev">
+                    <a class="prev btn"
+                       rel="prev"
+                       href="/2020/07/06/Nginx%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1/"
+                    >
+                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">Nginx网络服务</span><span class="post-nav-item">上一篇</span>
+                    </a>
+                </div>
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/07/05/DNS%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1/"
+                    >
+                        <span class="post-nav-title-item">DNS网络服务</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+    <div class="valine-container">
+        <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+        <div id="vcomments"></div>
+        <script>
+            new Valine({
+                el: '#vcomments',
+                appId: 'nNNGRtAhNMSlSykGrsarFKyT-gzGzoHsz',
+                appKey: 'j9bg0DklLawDGrGC6yPRFtFi',
+                meta: 'nick,wechat,remarks'.split(','),
+                avatar: 'wavatar',
+                enableQQ: true,
+                placeholder: '余生请指教~',
+                lang: 'zh-CN'.toLowerCase()
+            })
+        </script>
+    </div>
+
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+    <div class="article-toc-container fade-in-down-animation">
+        <div class="article-toc">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#哪些设置能够提升SSH远程管理的安全等级？"><span class="nav-number">1.</span> <span class="nav-text">哪些设置能够提升SSH远程管理的安全等级？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#ssh连接时认证时间过长如何解决？"><span class="nav-number">2.</span> <span class="nav-text">ssh连接时认证时间过长如何解决？</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#scp和rsync进行远程文件复制有什么区别？"><span class="nav-number">3.</span> <span class="nav-text">scp和rsync进行远程文件复制有什么区别？</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh的登录验证方式"><span class="nav-number"></span> <span class="nav-text">ssh的登录验证方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用户口令"><span class="nav-number"></span> <span class="nav-text">用户口令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#秘钥对登录"><span class="nav-number"></span> <span class="nav-text">秘钥对登录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh的登录端口和监听设置"><span class="nav-number"></span> <span class="nav-text">ssh的登录端口和监听设置</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#配置文件：-etc-ssh-sshd-config"><span class="nav-number">1.</span> <span class="nav-text">配置文件：&#x2F;etc&#x2F;ssh&#x2F;sshd_config</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh的登录用户限制"><span class="nav-number"></span> <span class="nav-text">ssh的登录用户限制</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#配置文件：-etc-ssh-sshd-config-1"><span class="nav-number">1.</span> <span class="nav-text">配置文件：&#x2F;etc&#x2F;ssh&#x2F;sshd_config</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh的登录超时设置"><span class="nav-number"></span> <span class="nav-text">ssh的登录超时设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh登录失败尝试次数"><span class="nav-number"></span> <span class="nav-text">ssh登录失败尝试次数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#配置文件：-etc-ssh-sshd-config-2"><span class="nav-number">1.</span> <span class="nav-text">配置文件：&#x2F;etc&#x2F;ssh&#x2F;sshd_config</span></a></li></ol>
+    </div>
+</div>
+        </div>
+    </div>
+
+
+                
+
+            </div>
+
+            
+
+        </main>
+
+        <div class="sidebar-tools">
+            <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <div class="scroll-to-top">
+                <ul>
+                    <li>
+                        <!--<i class="fa fa-caret-up"></i>-->
+                        <span class="scroll-percent"></span>
+                    </li>
+                </ul>
+            </div>
+        
+    </div>
+
+    <div class="page-bottom">
+        <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2021 <a href="/">欧阳修</a>
+        </div>
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v1.1.1</a>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+</div>
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+    
+<script src="/js/scroll-to-top.js"></script>
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        Nginx网络服务 | ___差池
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/wechat01.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"www.chiwahbb.club","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"1.1.1","author":"chiwah","repository":"https://github.com/XPoet/hexo-theme-ils"},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+<div class="page-template">
+    <div class="page-top">
+        <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            ___差池
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+    </div>
+
+    <div class="page-middle ">
+
+        <main class="main-content normal-code-theme">
+
+            <div class="main-content-left">
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">Nginx网络服务</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-07-06 11:39:52
+    </span>
+    
+    
+    
+</div>
+        </div>
+
+        <div class="article-content markdown-body">
+            <h4 id="Apache和Nginx各有什么优缺点，应该如何选择？"><a href="#Apache和Nginx各有什么优缺点，应该如何选择？" class="headerlink" title="Apache和Nginx各有什么优缺点，应该如何选择？"></a>Apache和Nginx各有什么优缺点，应该如何选择？</h4><h5 id="Apache的优缺点"><a href="#Apache的优缺点" class="headerlink" title="Apache的优缺点"></a>Apache的优缺点</h5><h6 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h6><ul>
+<li><p>Apache的rewrite功能比nginx的要强大</p>
+</li>
+<li><p>模块非常多。基本想要的功能都能找到模块</p>
+</li>
+<li><p>存在时间较长，文献较全，bug也相对较少</p>
+</li>
+<li><p>动静态解析都较稳定</p>
+<a id="more"></a>
+<h6 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h6></li>
+<li><p>由于工作模式是同步阻塞型，导致资源消耗较高，并发能力较差</p>
+</li>
+</ul>
+<h5 id="Nginx的优缺点"><a href="#Nginx的优缺点" class="headerlink" title="Nginx的优缺点"></a>Nginx的优缺点</h5><h6 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h6><ul>
+<li><p>轻量级服务，比Apache占用更少的内存及资源</p>
+</li>
+<li><p>并发能力强，nginx处理请求是异步阻塞的，而apache则是阻塞型的，在高并发下nginx能保持低资源低消耗高性能</p>
+</li>
+<li><p>高度模块化的设计，编写模块相对简单</p>
+</li>
+<li><p>社区活跃，各种高性能模块产出迅速</p>
+</li>
+</ul>
+<h6 id="缺点：-1"><a href="#缺点：-1" class="headerlink" title="缺点："></a>缺点：</h6><ul>
+<li>动态处理上需要使用fastcgi连接PHP的FPM服务，相比Apache不占优势</li>
+</ul>
+<h4 id="Apache和Nginx的选择"><a href="#Apache和Nginx的选择" class="headerlink" title="Apache和Nginx的选择"></a>Apache和Nginx的选择</h4><ul>
+<li><p>Nginx适合做静态处理，简单。效率高</p>
+</li>
+<li><p>Apache适合做动态处理，稳定，功能强</p>
+</li>
+<li><p>并发能力较高的情况下优先选择Nginx，并发要求不高的情况下两者都可以，规模较大的可以使用Nginx作为反向代理，然后将动态请求负载均衡到后端Apache上。</p>
+</li>
+</ul>
+<hr>
+<h4 id="为什么Nginx的并发能力强，资源消耗低"><a href="#为什么Nginx的并发能力强，资源消耗低" class="headerlink" title="为什么Nginx的并发能力强，资源消耗低"></a>为什么Nginx的并发能力强，资源消耗低</h4><h5 id="同步和异步"><a href="#同步和异步" class="headerlink" title="同步和异步"></a>同步和异步</h5><ul>
+<li><p>同步：小明收到快递将送达的短信，在楼下一直等到快递送达</p>
+</li>
+<li><p>异步：小明收到快递将送达的短信，小明不会下楼去取，而是快递小哥到楼下后，打电话通知小明，然后小明下楼取快递。</p>
+</li>
+</ul>
+<h5 id="阻塞和非阻塞"><a href="#阻塞和非阻塞" class="headerlink" title="阻塞和非阻塞"></a>阻塞和非阻塞</h5><ul>
+<li><p>阻塞：小明收到快递即将送达的信息后，什么事都不做，一直专心等快递送达</p>
+</li>
+<li><p>非阻塞：小明收到快递即将送达的信息后，等快递的时候，还一边敲代码，一边听歌，等着快递送达的消息。</p>
+</li>
+</ul>
+<h4 id="Nginx以异步非阻塞方式工作"><a href="#Nginx以异步非阻塞方式工作" class="headerlink" title="Nginx以异步非阻塞方式工作"></a>Nginx以异步非阻塞方式工作</h4><ul>
+<li><p>客户端发送request，服务器分配work进程来处理</p>
+</li>
+<li><p>能立即处理完的，处理后work进程释放资源，进行下一个request的处理</p>
+</li>
+<li><p>不能立即处理完的work进程注册返回事件，然后接着去处理其他request</p>
+</li>
+<li><p>当之前的request结果返回后，触发返回事件，由空间work进程接着处理</p>
+</li>
+</ul>
+<h6 id="通过这种快速处理，快速释放请求的方式，达到同样的配置可以处理更大并发量的目的"><a href="#通过这种快速处理，快速释放请求的方式，达到同样的配置可以处理更大并发量的目的" class="headerlink" title="通过这种快速处理，快速释放请求的方式，达到同样的配置可以处理更大并发量的目的"></a>通过这种快速处理，快速释放请求的方式，达到同样的配置可以处理更大并发量的目的</h6>
+        </div>
+
+        <div class="article-nav">
+            
+                <div class="article-prev">
+                    <a class="prev btn"
+                       rel="prev"
+                       href="/2020/07/09/Nginx%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E8%BF%9B%E9%98%B6/"
+                    >
+                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">Nginx网络服务进阶</span><span class="post-nav-item">上一篇</span>
+                    </a>
+                </div>
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/07/05/SSH%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1/"
+                    >
+                        <span class="post-nav-title-item">SSH网络服务</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+    <div class="valine-container">
+        <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+        <div id="vcomments"></div>
+        <script>
+            new Valine({
+                el: '#vcomments',
+                appId: 'nNNGRtAhNMSlSykGrsarFKyT-gzGzoHsz',
+                appKey: 'j9bg0DklLawDGrGC6yPRFtFi',
+                meta: 'nick,wechat,remarks'.split(','),
+                avatar: 'wavatar',
+                enableQQ: true,
+                placeholder: '余生请指教~',
+                lang: 'zh-CN'.toLowerCase()
+            })
+        </script>
+    </div>
+
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+    <div class="article-toc-container fade-in-down-animation">
+        <div class="article-toc">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Apache和Nginx各有什么优缺点，应该如何选择？"><span class="nav-number">1.</span> <span class="nav-text">Apache和Nginx各有什么优缺点，应该如何选择？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Apache的优缺点"><span class="nav-number">1.1.</span> <span class="nav-text">Apache的优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#优点："><span class="nav-number">1.1.1.</span> <span class="nav-text">优点：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#缺点："><span class="nav-number">1.1.2.</span> <span class="nav-text">缺点：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Nginx的优缺点"><span class="nav-number">1.2.</span> <span class="nav-text">Nginx的优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#优点：-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">优点：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#缺点：-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">缺点：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Apache和Nginx的选择"><span class="nav-number">2.</span> <span class="nav-text">Apache和Nginx的选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么Nginx的并发能力强，资源消耗低"><span class="nav-number">3.</span> <span class="nav-text">为什么Nginx的并发能力强，资源消耗低</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#同步和异步"><span class="nav-number">3.1.</span> <span class="nav-text">同步和异步</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#阻塞和非阻塞"><span class="nav-number">3.2.</span> <span class="nav-text">阻塞和非阻塞</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Nginx以异步非阻塞方式工作"><span class="nav-number">4.</span> <span class="nav-text">Nginx以异步非阻塞方式工作</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#通过这种快速处理，快速释放请求的方式，达到同样的配置可以处理更大并发量的目的"><span class="nav-number">4.0.1.</span> <span class="nav-text">通过这种快速处理，快速释放请求的方式，达到同样的配置可以处理更大并发量的目的</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </div>
+    </div>
+
+
+                
+
+            </div>
+
+            
+
+        </main>
+
+        <div class="sidebar-tools">
+            <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <div class="scroll-to-top">
+                <ul>
+                    <li>
+                        <!--<i class="fa fa-caret-up"></i>-->
+                        <span class="scroll-percent"></span>
+                    </li>
+                </ul>
+            </div>
+        
+    </div>
+
+    <div class="page-bottom">
+        <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2021 <a href="/">欧阳修</a>
+        </div>
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v1.1.1</a>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+</div>
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+    
+<script src="/js/scroll-to-top.js"></script>
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+
+
+</body>
+</html>

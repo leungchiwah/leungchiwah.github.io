@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        磁盘阵列Raid的特点与原理 | ___差池
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/wechat01.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"www.chiwahbb.club","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"1.1.1","author":"chiwah","repository":"https://github.com/XPoet/hexo-theme-ils"},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+<div class="page-template">
+    <div class="page-top">
+        <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            ___差池
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+    </div>
+
+    <div class="page-middle ">
+
+        <main class="main-content normal-code-theme">
+
+            <div class="main-content-left">
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">磁盘阵列Raid的特点与原理</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-07-04 13:20:41
+    </span>
+    
+    
+    
+</div>
+        </div>
+
+        <div class="article-content markdown-body">
+            <h2 id="Raid-0-独立磁盘冗余阵列"><a href="#Raid-0-独立磁盘冗余阵列" class="headerlink" title="Raid 0 (独立磁盘冗余阵列)"></a>Raid 0 (独立磁盘冗余阵列)</h2><ul>
+<li>必须使用两块或两块以上硬盘组成</li>
+<li>每块硬盘的大小必须一致</li>
+<li>是所有动态磁盘中,数据读写最快的</li>
+<li>损坏几率相对最高</li>
+<li>没有磁盘容错功能<a id="more"></a>
+
+</li>
+</ul>
+<h2 id="Raid-1-镜像阵列"><a href="#Raid-1-镜像阵列" class="headerlink" title="Raid 1 (镜像阵列)"></a>Raid 1 (镜像阵列)</h2><ul>
+<li>由两块或2的倍数硬盘组成</li>
+<li>每块硬盘大小必须一致</li>
+<li>硬盘使用率只有50%，写入速度最慢</li>
+<li>拥有磁盘容错功能</li>
+</ul>
+<h2 id="Raid-5-（奇偶校验）"><a href="#Raid-5-（奇偶校验）" class="headerlink" title="Raid 5 （奇偶校验）"></a>Raid 5 （奇偶校验）</h2><ul>
+<li>由三块或者三块以上硬盘组成</li>
+<li>每块硬盘大小必须一致</li>
+<li>磁盘利用率是n-1块盘</li>
+<li>利用奇偶校验，拥有磁盘容错功能个（==只支持一块硬盘损坏==）</li>
+</ul>
+<hr>
+<h4 id="相关面试题"><a href="#相关面试题" class="headerlink" title="相关面试题"></a>相关面试题</h4><p>简述Raid 6 、Raid 10的特点与原理</p>
+<h6 id="Raid-6"><a href="#Raid-6" class="headerlink" title="==Raid== 6"></a>==Raid== 6</h6><blockquote>
+<p>Raid 6 是Raid 5 的增强版</p>
+<p>由4块或以上硬盘组成</p>
+<p>每块硬盘大小必须一致</p>
+<p>磁盘利用率是n-2块盘</p>
+<p>支持磁盘容错，可以支持2块硬盘损坏</p>
+</blockquote>
+<h6 id="Raid-10"><a href="#Raid-10" class="headerlink" title="Raid 10"></a>Raid 10</h6><blockquote>
+<p>必须有4块等大小的硬盘组成</p>
+<p>两两硬盘先组成Raid 1，再组成Raid 0</p>
+<p>兼顾Raid 0 和Raid 1的特点，中和两种Raid的特点</p>
+</blockquote>
+<p>软Raid与硬Raid的区别？</p>
+<blockquote>
+<p>软Raid：是由操作系统模拟的Raid，一旦硬盘损坏，操作系统就会损坏，Raid会丧失作用</p>
+<p>硬Raid：是由独立于硬盘之外的，硬件Raid卡组成；就算硬盘损坏，也不会导致Raid卡损坏，磁盘容错才能起作用</p>
+</blockquote>
+
+        </div>
+
+        <div class="article-nav">
+            
+                <div class="article-prev">
+                    <a class="prev btn"
+                       rel="prev"
+                       href="/2020/07/04/%E7%AE%80%E8%BF%B0Linux%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/"
+                    >
+                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">简述Linux启动过程</span><span class="post-nav-item">上一篇</span>
+                    </a>
+                </div>
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/07/04/Linux%E7%B3%BB%E7%BB%9F%E8%B5%84%E6%BA%90%E6%9F%A5%E7%9C%8B/"
+                    >
+                        <span class="post-nav-title-item">Linux系统资源查看</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+    <div class="valine-container">
+        <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+        <div id="vcomments"></div>
+        <script>
+            new Valine({
+                el: '#vcomments',
+                appId: 'nNNGRtAhNMSlSykGrsarFKyT-gzGzoHsz',
+                appKey: 'j9bg0DklLawDGrGC6yPRFtFi',
+                meta: 'nick,wechat,remarks'.split(','),
+                avatar: 'wavatar',
+                enableQQ: true,
+                placeholder: '余生请指教~',
+                lang: 'zh-CN'.toLowerCase()
+            })
+        </script>
+    </div>
+
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+    <div class="article-toc-container fade-in-down-animation">
+        <div class="article-toc">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Raid-0-独立磁盘冗余阵列"><span class="nav-number">1.</span> <span class="nav-text">Raid 0 (独立磁盘冗余阵列)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Raid-1-镜像阵列"><span class="nav-number">2.</span> <span class="nav-text">Raid 1 (镜像阵列)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Raid-5-（奇偶校验）"><span class="nav-number">3.</span> <span class="nav-text">Raid 5 （奇偶校验）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#相关面试题"><span class="nav-number">3.0.1.</span> <span class="nav-text">相关面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Raid-6"><span class="nav-number">3.0.1.0.1.</span> <span class="nav-text">&#x3D;&#x3D;Raid&#x3D;&#x3D; 6</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Raid-10"><span class="nav-number">3.0.1.0.2.</span> <span class="nav-text">Raid 10</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </div>
+    </div>
+
+
+                
+
+            </div>
+
+            
+
+        </main>
+
+        <div class="sidebar-tools">
+            <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <div class="scroll-to-top">
+                <ul>
+                    <li>
+                        <!--<i class="fa fa-caret-up"></i>-->
+                        <span class="scroll-percent"></span>
+                    </li>
+                </ul>
+            </div>
+        
+    </div>
+
+    <div class="page-bottom">
+        <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2021 <a href="/">欧阳修</a>
+        </div>
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v1.1.1</a>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+</div>
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+    
+<script src="/js/scroll-to-top.js"></script>
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+
+
+</body>
+</html>

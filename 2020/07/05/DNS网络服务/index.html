@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        DNS网络服务 | ___差池
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/wechat01.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"www.chiwahbb.club","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"1.1.1","author":"chiwah","repository":"https://github.com/XPoet/hexo-theme-ils"},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+<div class="page-template">
+    <div class="page-top">
+        <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            ___差池
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+    </div>
+
+    <div class="page-middle ">
+
+        <main class="main-content normal-code-theme">
+
+            <div class="main-content-left">
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">DNS网络服务</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-07-05 16:54:05
+    </span>
+    
+    
+    
+</div>
+        </div>
+
+        <div class="article-content markdown-body">
+            <h5 id="请描述用户访问网站时DNS的解析过程"><a href="#请描述用户访问网站时DNS的解析过程" class="headerlink" title="请描述用户访问网站时DNS的解析过程"></a>请描述用户访问网站时DNS的解析过程</h5><h6 id="递归查询"><a href="#递归查询" class="headerlink" title="递归查询"></a>递归查询</h6><ol>
+<li>客户机首先查看本地hosts文件是否有解析记录，有则直接用来访问web server</li>
+<li>没有则向网卡中记录的首选DNS（本地DNS）发起查询请求</li>
+<li>本地DNS若有记录则返回给客户端，客户端接收到后直接访问web server<a id="more"></a>
+<h6 id="迭代查询"><a href="#迭代查询" class="headerlink" title="迭代查询"></a>迭代查询</h6></li>
+<li>若没有，则本地DNS向根域服务器发起请求，请求解析对应顶级域的IP地址</li>
+<li>本地DNS得到顶级域服务器IP后，再想顶级域服务器发起请求，请求解析权威DNS服务器的IP地址</li>
+<li>本地DNS服务器获取到权威DNS服务器IP地址后，再向其查询具体的完整域名的对应解析记录</li>
+<li>最终本地DNS将查询到的对应域名的解析记录发送给客户端，并在本地记录一份</li>
+</ol>
+<h5 id="权威DNS-是经上一级授权对域名进行解析的DNS服务器，同时它可以把解析授权转授给其他服务器"><a href="#权威DNS-是经上一级授权对域名进行解析的DNS服务器，同时它可以把解析授权转授给其他服务器" class="headerlink" title="==权威DNS==是经上一级授权对域名进行解析的DNS服务器，同时它可以把解析授权转授给其他服务器"></a>==权威DNS==是经上一级授权对域名进行解析的DNS服务器，同时它可以把解析授权转授给其他服务器</h5><h5 id="递归DNS-负责接受用户对任何域名的查询，并返回结果给用户，它可以缓存结果避免用户再向上查询"><a href="#递归DNS-负责接受用户对任何域名的查询，并返回结果给用户，它可以缓存结果避免用户再向上查询" class="headerlink" title="==递归DNS==负责接受用户对任何域名的查询，并返回结果给用户，它可以缓存结果避免用户再向上查询"></a>==递归DNS==负责接受用户对任何域名的查询，并返回结果给用户，它可以缓存结果避免用户再向上查询</h5><h5 id="智能DNS-就是将对用户发起的查询进行判断出是哪个运营商的用户查询，然后将请求转发给你相应的运营商IP处理，减少跨运营访问的时间，提高访问速度"><a href="#智能DNS-就是将对用户发起的查询进行判断出是哪个运营商的用户查询，然后将请求转发给你相应的运营商IP处理，减少跨运营访问的时间，提高访问速度" class="headerlink" title="==智能DNS==就是将对用户发起的查询进行判断出是哪个运营商的用户查询，然后将请求转发给你相应的运营商IP处理，减少跨运营访问的时间，提高访问速度"></a>==智能DNS==就是将对用户发起的查询进行判断出是哪个运营商的用户查询，然后将请求转发给你相应的运营商IP处理，减少跨运营访问的时间，提高访问速度</h5>
+        </div>
+
+        <div class="article-nav">
+            
+                <div class="article-prev">
+                    <a class="prev btn"
+                       rel="prev"
+                       href="/2020/07/05/SSH%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1/"
+                    >
+                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">SSH网络服务</span><span class="post-nav-item">上一篇</span>
+                    </a>
+                </div>
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/07/05/%E7%AE%80%E8%BF%B0TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E7%9A%84%E8%BF%87%E7%A8%8B/"
+                    >
+                        <span class="post-nav-title-item">简述TCP三次握手的过程</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+    <div class="valine-container">
+        <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+        <div id="vcomments"></div>
+        <script>
+            new Valine({
+                el: '#vcomments',
+                appId: 'nNNGRtAhNMSlSykGrsarFKyT-gzGzoHsz',
+                appKey: 'j9bg0DklLawDGrGC6yPRFtFi',
+                meta: 'nick,wechat,remarks'.split(','),
+                avatar: 'wavatar',
+                enableQQ: true,
+                placeholder: '余生请指教~',
+                lang: 'zh-CN'.toLowerCase()
+            })
+        </script>
+    </div>
+
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+    <div class="article-toc-container fade-in-down-animation">
+        <div class="article-toc">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#请描述用户访问网站时DNS的解析过程"><span class="nav-number">1.</span> <span class="nav-text">请描述用户访问网站时DNS的解析过程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#递归查询"><span class="nav-number">1.1.</span> <span class="nav-text">递归查询</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#迭代查询"><span class="nav-number">1.2.</span> <span class="nav-text">迭代查询</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#权威DNS-是经上一级授权对域名进行解析的DNS服务器，同时它可以把解析授权转授给其他服务器"><span class="nav-number">2.</span> <span class="nav-text">&#x3D;&#x3D;权威DNS&#x3D;&#x3D;是经上一级授权对域名进行解析的DNS服务器，同时它可以把解析授权转授给其他服务器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#递归DNS-负责接受用户对任何域名的查询，并返回结果给用户，它可以缓存结果避免用户再向上查询"><span class="nav-number">3.</span> <span class="nav-text">&#x3D;&#x3D;递归DNS&#x3D;&#x3D;负责接受用户对任何域名的查询，并返回结果给用户，它可以缓存结果避免用户再向上查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#智能DNS-就是将对用户发起的查询进行判断出是哪个运营商的用户查询，然后将请求转发给你相应的运营商IP处理，减少跨运营访问的时间，提高访问速度"><span class="nav-number">4.</span> <span class="nav-text">&#x3D;&#x3D;智能DNS&#x3D;&#x3D;就是将对用户发起的查询进行判断出是哪个运营商的用户查询，然后将请求转发给你相应的运营商IP处理，减少跨运营访问的时间，提高访问速度</span></a></li></ol>
+    </div>
+</div>
+        </div>
+    </div>
+
+
+                
+
+            </div>
+
+            
+
+        </main>
+
+        <div class="sidebar-tools">
+            <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <div class="scroll-to-top">
+                <ul>
+                    <li>
+                        <!--<i class="fa fa-caret-up"></i>-->
+                        <span class="scroll-percent"></span>
+                    </li>
+                </ul>
+            </div>
+        
+    </div>
+
+    <div class="page-bottom">
+        <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2021 <a href="/">欧阳修</a>
+        </div>
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v1.1.1</a>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+</div>
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+    
+<script src="/js/scroll-to-top.js"></script>
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+
+
+</body>
+</html>

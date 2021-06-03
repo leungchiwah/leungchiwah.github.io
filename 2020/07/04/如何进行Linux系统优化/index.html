@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        如何进行Linux系统优化 | ___差池
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/wechat01.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"www.chiwahbb.club","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"1.1.1","author":"chiwah","repository":"https://github.com/XPoet/hexo-theme-ils"},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+<div class="page-template">
+    <div class="page-top">
+        <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            ___差池
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+    </div>
+
+    <div class="page-middle ">
+
+        <main class="main-content normal-code-theme">
+
+            <div class="main-content-left">
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">如何进行Linux系统优化</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-07-04 13:24:12
+    </span>
+    
+    
+    
+</div>
+        </div>
+
+        <div class="article-content markdown-body">
+            <h2 id="Linux系统优化策略"><a href="#Linux系统优化策略" class="headerlink" title="Linux系统优化策略"></a>Linux系统优化策略</h2><h4 id="禁用不需要的服务"><a href="#禁用不需要的服务" class="headerlink" title="禁用不需要的服务"></a>禁用不需要的服务</h4><p>ntsysv命令最为方便</p>
+<h4 id="避免直接使用root用户，普通用户通过sudo授权操作"><a href="#避免直接使用root用户，普通用户通过sudo授权操作" class="headerlink" title="避免直接使用root用户，普通用户通过sudo授权操作"></a>避免直接使用root用户，普通用户通过sudo授权操作</h4><a id="more"></a>
+<h4 id="通过chattr锁定重要系统文件"><a href="#通过chattr锁定重要系统文件" class="headerlink" title="通过chattr锁定重要系统文件"></a>通过chattr锁定重要系统文件</h4><p>/etc/passwd<br>/etc/shadow<br>/etc/group<br>/etc/gshadow<br>/etc/inittab</p>
+<h4 id="配置国内yum源，加快下载速度"><a href="#配置国内yum源，加快下载速度" class="headerlink" title="配置国内yum源，加快下载速度"></a>配置国内yum源，加快下载速度</h4><h4 id="配置系统同时打开最大文件数"><a href="#配置系统同时打开最大文件数" class="headerlink" title="配置系统同时打开最大文件数"></a>配置系统同时打开最大文件数</h4><p>vi /etc/profile</p>
+<p>ulimit -SHn 65535</p>
+<h4 id="同步时间服务器"><a href="#同步时间服务器" class="headerlink" title="同步时间服务器"></a>同步时间服务器</h4><p>ntpdate ntp1.aliyun.com</p>
+<p>通过crond定时任务，让时间同步命令每五分钟执行一次</p>
+<h4 id="更改ssh服务的默认端口，配置SSH秘钥对登录"><a href="#更改ssh服务的默认端口，配置SSH秘钥对登录" class="headerlink" title="更改ssh服务的默认端口，配置SSH秘钥对登录"></a>更改ssh服务的默认端口，配置SSH秘钥对登录</h4><h4 id="配置合理的iptables防火墙规则"><a href="#配置合理的iptables防火墙规则" class="headerlink" title="配置合理的iptables防火墙规则"></a>配置合理的iptables防火墙规则</h4><h4 id="配置合理的SELinux安全上下文"><a href="#配置合理的SELinux安全上下文" class="headerlink" title="配置合理的SELinux安全上下文"></a>配置合理的SELinux安全上下文</h4><h4 id="指定合理的监控策略"><a href="#指定合理的监控策略" class="headerlink" title="指定合理的监控策略"></a>指定合理的监控策略</h4><h4 id="定时备份系统重要文件"><a href="#定时备份系统重要文件" class="headerlink" title="定时备份系统重要文件"></a>定时备份系统重要文件</h4>
+        </div>
+
+        <div class="article-nav">
+            
+                <div class="article-prev">
+                    <a class="prev btn"
+                       rel="prev"
+                       href="/2020/07/05/OSI%E4%B8%83%E5%B1%82%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%88%86%E5%B1%82%E4%B8%8E%E4%BD%9C%E7%94%A8/"
+                    >
+                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">OSI七层模型的分层与作用</span><span class="post-nav-item">上一篇</span>
+                    </a>
+                </div>
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/07/04/%E7%AE%80%E8%BF%B0Linux%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/"
+                    >
+                        <span class="post-nav-title-item">简述Linux启动过程</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+    <div class="valine-container">
+        <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+        <div id="vcomments"></div>
+        <script>
+            new Valine({
+                el: '#vcomments',
+                appId: 'nNNGRtAhNMSlSykGrsarFKyT-gzGzoHsz',
+                appKey: 'j9bg0DklLawDGrGC6yPRFtFi',
+                meta: 'nick,wechat,remarks'.split(','),
+                avatar: 'wavatar',
+                enableQQ: true,
+                placeholder: '余生请指教~',
+                lang: 'zh-CN'.toLowerCase()
+            })
+        </script>
+    </div>
+
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+    <div class="article-toc-container fade-in-down-animation">
+        <div class="article-toc">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux系统优化策略"><span class="nav-number">1.</span> <span class="nav-text">Linux系统优化策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#禁用不需要的服务"><span class="nav-number">1.0.1.</span> <span class="nav-text">禁用不需要的服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#避免直接使用root用户，普通用户通过sudo授权操作"><span class="nav-number">1.0.2.</span> <span class="nav-text">避免直接使用root用户，普通用户通过sudo授权操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过chattr锁定重要系统文件"><span class="nav-number">1.0.3.</span> <span class="nav-text">通过chattr锁定重要系统文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置国内yum源，加快下载速度"><span class="nav-number">1.0.4.</span> <span class="nav-text">配置国内yum源，加快下载速度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置系统同时打开最大文件数"><span class="nav-number">1.0.5.</span> <span class="nav-text">配置系统同时打开最大文件数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#同步时间服务器"><span class="nav-number">1.0.6.</span> <span class="nav-text">同步时间服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更改ssh服务的默认端口，配置SSH秘钥对登录"><span class="nav-number">1.0.7.</span> <span class="nav-text">更改ssh服务的默认端口，配置SSH秘钥对登录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置合理的iptables防火墙规则"><span class="nav-number">1.0.8.</span> <span class="nav-text">配置合理的iptables防火墙规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置合理的SELinux安全上下文"><span class="nav-number">1.0.9.</span> <span class="nav-text">配置合理的SELinux安全上下文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指定合理的监控策略"><span class="nav-number">1.0.10.</span> <span class="nav-text">指定合理的监控策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定时备份系统重要文件"><span class="nav-number">1.0.11.</span> <span class="nav-text">定时备份系统重要文件</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+        </div>
+    </div>
+
+
+                
+
+            </div>
+
+            
+
+        </main>
+
+        <div class="sidebar-tools">
+            <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <div class="scroll-to-top">
+                <ul>
+                    <li>
+                        <!--<i class="fa fa-caret-up"></i>-->
+                        <span class="scroll-percent"></span>
+                    </li>
+                </ul>
+            </div>
+        
+    </div>
+
+    <div class="page-bottom">
+        <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2021 <a href="/">欧阳修</a>
+        </div>
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v1.1.1</a>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+</div>
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+    
+<script src="/js/scroll-to-top.js"></script>
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+
+
+</body>
+</html>

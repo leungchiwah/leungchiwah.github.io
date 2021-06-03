@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    
+    <title>
+        Linux系统资源查看 | ___差池
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <link rel="shortcut icon" href="/images/wechat01.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <script id="hexo-configurations">
+    let CONFIG = {"hostname":"www.chiwahbb.club","root":"/","localsearch":{"enable":true,"trigger":"auto","unescape":false,"preload":true},"themeInfo":{"name":"ILS","version":"1.1.1","author":"chiwah","repository":"https://github.com/XPoet/hexo-theme-ils"},"path":"search.json"};
+  </script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+<div class="page-template">
+    <div class="page-top">
+        <header class="header-wrapper">
+
+    <div class="header-content">
+
+        <a class="logo-title" href="/">
+            ___差池
+        </a>
+
+        <ul class="menu-list">
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/"
+                    >
+                        首页
+                    </a>
+                </li>
+            
+                <li class="menu-item">
+                    <a class=""
+                       href="/archives"
+                    >
+                        归档
+                    </a>
+                </li>
+            
+        </ul>
+
+        <div class="menu-bar">
+            <div class="menu-bar-middle"></div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/">首页</a>
+                </li>
+            
+                <li class="drawer-menu-item">
+                    <a class=""
+                       href="/archives">归档</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+    </div>
+
+    <div class="page-middle ">
+
+        <main class="main-content normal-code-theme">
+
+            <div class="main-content-left">
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <h3><a class="title-hover-animation">Linux系统资源查看</a></h3>
+        </div>
+
+        <div class="meta-info">
+            <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa fa-calendar-o"></i> 2020-07-04 12:58:46
+    </span>
+    
+    
+    
+</div>
+        </div>
+
+        <div class="article-content markdown-body">
+            <h5 id="Linux中有许多系统资源需要监管，请问有哪些命令可以查看？"><a href="#Linux中有许多系统资源需要监管，请问有哪些命令可以查看？" class="headerlink" title="Linux中有许多系统资源需要监管，请问有哪些命令可以查看？"></a>Linux中有许多系统资源需要监管，请问有哪些命令可以查看？</h5><h2 id="性能管理介绍"><a href="#性能管理介绍" class="headerlink" title="性能管理介绍"></a>性能管理介绍</h2><h6 id="操作系统对硬件资源统一管理，并把资源分配给各个APP使用，资源的使用情况直接影响到程序运行的速度，如果资源使用过高，甚至会造成服务器宕机，直接造成业务中断。"><a href="#操作系统对硬件资源统一管理，并把资源分配给各个APP使用，资源的使用情况直接影响到程序运行的速度，如果资源使用过高，甚至会造成服务器宕机，直接造成业务中断。" class="headerlink" title="操作系统对硬件资源统一管理，并把资源分配给各个APP使用，资源的使用情况直接影响到程序运行的速度，如果资源使用过高，甚至会造成服务器宕机，直接造成业务中断。"></a>操作系统对硬件资源统一管理，并把资源分配给各个APP使用，资源的使用情况直接影响到程序运行的速度，如果资源使用过高，甚至会造成服务器宕机，直接造成业务中断。</h6><h6 id="实时掌控资源使用情况是每一个系统管理员必备的技能，可以及时发现潜在的问题并及时处理。"><a href="#实时掌控资源使用情况是每一个系统管理员必备的技能，可以及时发现潜在的问题并及时处理。" class="headerlink" title="实时掌控资源使用情况是每一个系统管理员必备的技能，可以及时发现潜在的问题并及时处理。"></a>实时掌控资源使用情况是每一个系统管理员必备的技能，可以及时发现潜在的问题并及时处理。</h6><a id="more"></a>
+<h4 id="硬件资源管理逻辑"><a href="#硬件资源管理逻辑" class="headerlink" title="硬件资源管理逻辑"></a>硬件资源管理逻辑</h4><ol>
+<li>资源管理的命令</li>
+<li>阈值是多少</li>
+<li>如何定位问题</li>
+<li>如何解决</li>
+</ol>
+<h2 id="CPU性能管理"><a href="#CPU性能管理" class="headerlink" title="CPU性能管理"></a>CPU性能管理</h2><h6 id="查看命令-ps-top-uptime"><a href="#查看命令-ps-top-uptime" class="headerlink" title="查看命令:ps top uptime"></a>查看命令:ps top uptime</h6><h6 id="检查项-进程总数、running队列、load值、使用率"><a href="#检查项-进程总数、running队列、load值、使用率" class="headerlink" title="检查项:进程总数、running队列、load值、使用率"></a>检查项:进程总数、running队列、load值、使用率</h6><ul>
+<li>1）总进程数-0业务进程数≈业务进程数</li>
+</ul>
+<blockquote>
+<p>是<br>说明机器压力大，需要升级配置或者通过集群解决<br>不是<br>查看任务管理器中的进程，找是否有陌生进程，不认识的可以百度查询。<br>继续综合后续指标判断</p>
+</blockquote>
+<ul>
+<li>2）running队列长度</li>
+</ul>
+<blockquote>
+<p>预警线：单核不超过10个</p>
+<p>超过说明CPU资源不足，是否是业务造成的</p>
+<p>是：说明机器压力大，需要升级配置或者通过集群解决<br>不是：找到R队列中的进程，判断是否为恶意程序，恶意程序直接KILL掉，并清除相关连接</p>
+</blockquote>
+<ul>
+<li>3）CPU-load值和使用率</li>
+</ul>
+<blockquote>
+<p>两个是成正比的，使用率高，负载就高</p>
+<p>预警线:load average 接受范围 3-5【单个核 多核乘以N】,使用率80%</p>
+<p>重点看CPU使用率，单核使用率是100%,多核100*N%</p>
+<p>找到高消耗CPU的进程，判断是否为业务进程</p>
+<p>是      业务说明机器压力大，需要升级配置或者通过集群解决<br>不是   判断是否为恶意程序，恶意程序直接KILL掉，并清除相关连接</p>
+</blockquote>
+<h2 id="磁盘性能管理"><a href="#磁盘性能管理" class="headerlink" title="磁盘性能管理"></a>磁盘性能管理</h2><h6 id="查看命令-df-iostat-iotop"><a href="#查看命令-df-iostat-iotop" class="headerlink" title="查看命令:df iostat iotop"></a>查看命令:df iostat iotop</h6><h6 id="检查项：使用率-IO队列长度"><a href="#检查项：使用率-IO队列长度" class="headerlink" title="检查项：使用率 IO队列长度"></a>检查项：使用率 IO队列长度</h6><ul>
+<li>1）使用率</li>
+</ul>
+<blockquote>
+<p>磁盘使用率预警线: 80%</p>
+<p>超过80%应该加磁盘或者清理空间</p>
+</blockquote>
+<ul>
+<li>2）IO队列长度</li>
+</ul>
+<blockquote>
+<p>队列长度2-3</p>
+<p>检查哪个进程占用了IO，是否为恶意进程</p>
+<p>是:      找到进程Kill掉，清除对应文件<br>不是       优化IO，磁盘阵列或者上存储<br>iostat命令</p>
+</blockquote>
+<blockquote>
+<p>命令语法</p>
+<p>iostat [options] [interval] [count]</p>
+<p>命令选项</p>
+<p>-x 详细信息</p>
+<p>-m 以M显示 默认块</p>
+<p>-c 仅显示CPU统计信息.与-d选项互斥.</p>
+<p>-d 仅显示磁盘统计信息.与-c选项互斥.</p>
+<p>-k 以K为单位显示每秒的磁盘请求数,默认单位块.</p>
+<p>-V 打印版本号和帮助信息.</p>
+</blockquote>
+<h2 id="网络性能管理"><a href="#网络性能管理" class="headerlink" title="网络性能管理"></a>网络性能管理</h2><h6 id="查看命令-iftop"><a href="#查看命令-iftop" class="headerlink" title="查看命令:iftop"></a>查看命令:iftop</h6><h6 id="检查项-流入流出峰值"><a href="#检查项-流入流出峰值" class="headerlink" title="检查项: 流入流出峰值"></a>检查项: 流入流出峰值</h6><h6 id="阈值-总带宽的80"><a href="#阈值-总带宽的80" class="headerlink" title="阈值:总带宽的80%"></a>阈值:总带宽的80%</h6><h2 id="内存性能管理"><a href="#内存性能管理" class="headerlink" title="内存性能管理"></a>内存性能管理</h2><h6 id="查看命令：free"><a href="#查看命令：free" class="headerlink" title="查看命令：free"></a>查看命令：free</h6><h6 id="查看项：物理-swap使用率"><a href="#查看项：物理-swap使用率" class="headerlink" title="查看项：物理/swap使用率"></a>查看项：物理/swap使用率</h6><h6 id="阈值-80-5"><a href="#阈值-80-5" class="headerlink" title="阈值: 80%/5%"></a>阈值: 80%/5%</h6><h6 id="内存使用进程-ps"><a href="#内存使用进程-ps" class="headerlink" title="内存使用进程:ps"></a>内存使用进程:ps</h6>
+        </div>
+
+        <div class="article-nav">
+            
+                <div class="article-prev">
+                    <a class="prev btn"
+                       rel="prev"
+                       href="/2020/07/04/%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97Raid%E7%9A%84%E7%89%B9%E7%82%B9%E4%B8%8E%E5%8E%9F%E7%90%86/"
+                    >
+                        <i class="fa fa-chevron-left"></i> <span class="post-nav-title-item">磁盘阵列Raid的特点与原理</span><span class="post-nav-item">上一篇</span>
+                    </a>
+                </div>
+            
+            
+                <div class="article-next">
+                    <a class="next btn"
+                       rel="next"
+                       href="/2020/07/03/%E7%AE%80%E8%BF%B0Linux%E6%9D%83%E9%99%90%E5%88%92%E5%88%86%E5%8E%9F%E5%88%99/"
+                    >
+                        <span class="post-nav-title-item">简述Linux权限划分原则</span><span class="post-nav-item">下一篇</span> <i class="fa fa-chevron-right"></i>
+                    </a>
+                </div>
+            
+        </div>
+
+        <div class="comment-container">
+            <div class="comments-container">
+    
+        
+    <div class="valine-container">
+        <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+        <div id="vcomments"></div>
+        <script>
+            new Valine({
+                el: '#vcomments',
+                appId: 'nNNGRtAhNMSlSykGrsarFKyT-gzGzoHsz',
+                appKey: 'j9bg0DklLawDGrGC6yPRFtFi',
+                meta: 'nick,wechat,remarks'.split(','),
+                avatar: 'wavatar',
+                enableQQ: true,
+                placeholder: '余生请指教~',
+                lang: 'zh-CN'.toLowerCase()
+            })
+        </script>
+    </div>
+
+
+    
+</div>
+        </div>
+    </div>
+</div>
+
+    <div class="article-toc-container fade-in-down-animation">
+        <div class="article-toc">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Linux中有许多系统资源需要监管，请问有哪些命令可以查看？"><span class="nav-number">1.</span> <span class="nav-text">Linux中有许多系统资源需要监管，请问有哪些命令可以查看？</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能管理介绍"><span class="nav-number"></span> <span class="nav-text">性能管理介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#操作系统对硬件资源统一管理，并把资源分配给各个APP使用，资源的使用情况直接影响到程序运行的速度，如果资源使用过高，甚至会造成服务器宕机，直接造成业务中断。"><span class="nav-number">0.1.</span> <span class="nav-text">操作系统对硬件资源统一管理，并把资源分配给各个APP使用，资源的使用情况直接影响到程序运行的速度，如果资源使用过高，甚至会造成服务器宕机，直接造成业务中断。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#实时掌控资源使用情况是每一个系统管理员必备的技能，可以及时发现潜在的问题并及时处理。"><span class="nav-number">0.2.</span> <span class="nav-text">实时掌控资源使用情况是每一个系统管理员必备的技能，可以及时发现潜在的问题并及时处理。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#硬件资源管理逻辑"><span class="nav-number"></span> <span class="nav-text">硬件资源管理逻辑</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU性能管理"><span class="nav-number"></span> <span class="nav-text">CPU性能管理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#查看命令-ps-top-uptime"><span class="nav-number">0.1.</span> <span class="nav-text">查看命令:ps top uptime</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#检查项-进程总数、running队列、load值、使用率"><span class="nav-number">0.2.</span> <span class="nav-text">检查项:进程总数、running队列、load值、使用率</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘性能管理"><span class="nav-number"></span> <span class="nav-text">磁盘性能管理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#查看命令-df-iostat-iotop"><span class="nav-number">0.1.</span> <span class="nav-text">查看命令:df iostat iotop</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#检查项：使用率-IO队列长度"><span class="nav-number">0.2.</span> <span class="nav-text">检查项：使用率 IO队列长度</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络性能管理"><span class="nav-number"></span> <span class="nav-text">网络性能管理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#查看命令-iftop"><span class="nav-number">0.1.</span> <span class="nav-text">查看命令:iftop</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#检查项-流入流出峰值"><span class="nav-number">0.2.</span> <span class="nav-text">检查项: 流入流出峰值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#阈值-总带宽的80"><span class="nav-number">0.3.</span> <span class="nav-text">阈值:总带宽的80%</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存性能管理"><span class="nav-number"></span> <span class="nav-text">内存性能管理</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#查看命令：free"><span class="nav-number">0.1.</span> <span class="nav-text">查看命令：free</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#查看项：物理-swap使用率"><span class="nav-number">0.2.</span> <span class="nav-text">查看项：物理&#x2F;swap使用率</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#阈值-80-5"><span class="nav-number">0.3.</span> <span class="nav-text">阈值: 80%&#x2F;5%</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#内存使用进程-ps"><span class="nav-number">0.4.</span> <span class="nav-text">内存使用进程:ps</span></a></li></ol></li></ol>
+    </div>
+</div>
+        </div>
+    </div>
+
+
+                
+
+            </div>
+
+            
+
+        </main>
+
+        <div class="sidebar-tools">
+            <div class="tools-container">
+    <ul class="tools-list">
+        
+            <li class="search popup-trigger">
+                <i class="fa fa-search"></i>
+            </li>
+            
+<script src="/js/local-search.js"></script>
+
+        
+        <li class="mode-toggle">
+            <i class="fa fa-moon-o"></i>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <div class="scroll-to-top">
+                <ul>
+                    <li>
+                        <!--<i class="fa fa-caret-up"></i>-->
+                        <span class="scroll-percent"></span>
+                    </li>
+                </ul>
+            </div>
+        
+    </div>
+
+    <div class="page-bottom">
+        <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy; 2021 <a href="/">欧阳修</a>
+        </div>
+        <div class="theme-info info-item">
+            由 <a target="_blank" href="https://hexo.io">Hexo</a> 驱动 | 主题 <a
+                    href="https://github.com/XPoet/hexo-theme-ils" target="_blank">ILS v1.1.1</a>
+        </div>
+        
+    </div>
+</footer>
+    </div>
+</div>
+
+    <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-icon">
+            <i class="fa fa-search"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/main.js"></script>
+<script src="/js/header-shrink.js"></script>
+<script src="/js/toggle-mode.js"></script>
+
+
+
+    
+<script src="/js/scroll-to-top.js"></script>
+
+
+
+
+
+    
+        
+<script src="/js/code-copy.js"></script>
+
+    
+
+    
+        
+<script src="/lib/anime.min.js"></script>
+<script src="/js/toc.js"></script>
+
+    
+
+
+
+
+</body>
+</html>
